@@ -123,8 +123,18 @@ bool PositionControl::update(const float dt)
 
 void PositionControl::_positionControl()
 {
+
 	// P-position controller
-	Vector3f vel_sp_position = (_pos_sp - _pos).emult(_gain_pos_p);
+	//Vector3f vel_sp_position = (_pos_sp - _pos).emult(_gain_pos_p);
+
+	// *** CUSTOM ***
+	Vector3f p_err = _pos_sp - _pos;
+
+	_rotateXY(p_err, -_yaw);
+	Vector3f vel_sp_position = p_err.emult(_gain_pos_p);
+	_rotateXY(vel_sp_position, _yaw);
+	// *** END-CUSTOM ***
+
 	// Position and feed-forward velocity setpoints or position states being NAN results in them not having an influence
 	ControlMath::addIfNotNanVector3f(_vel_sp, vel_sp_position);
 	// make sure there are no NAN elements for further reference while constraining
@@ -144,7 +154,13 @@ void PositionControl::_velocityControl(const float dt)
 
 	// PID velocity control
 	Vector3f vel_error = _vel_sp - _vel;
+	//Vector3f acc_sp_velocity = vel_error.emult(_gain_vel_p) + _vel_int - _vel_dot.emult(_gain_vel_d);
+
+	// *** CUSTOM ***
+	_rotateXY(vel_error, -_yaw);
 	Vector3f acc_sp_velocity = vel_error.emult(_gain_vel_p) + _vel_int - _vel_dot.emult(_gain_vel_d);
+	_rotateXY(acc_sp_velocity, _yaw);
+	// *** END-CUSTOM ***
 
 	// No control input from setpoints or corresponding states which are NAN
 	ControlMath::addIfNotNanVector3f(_acc_sp, acc_sp_velocity);
@@ -261,3 +277,10 @@ void PositionControl::getAttitudeSetpoint(vehicle_attitude_setpoint_s &attitude_
 	ControlMath::thrustToAttitude(_thr_sp, _yaw_sp, attitude_setpoint);
 	attitude_setpoint.yaw_sp_move_rate = _yawspeed_sp;
 }
+
+// *** CUSTOM ***
+void PositionControl::_rotateXY(matrix::Vector3f& v, float angle){
+	Vector2f temp = v.xy();
+	v.xy() = Dcm2f(angle) * temp;
+}
+// *** END-CUSTOM ***

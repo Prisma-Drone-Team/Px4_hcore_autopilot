@@ -165,12 +165,45 @@ void MulticopterPositionControl::parameters_update(bool force)
 					    "Land tilt limit has been constrained by maximum tilt", _param_mpc_tiltmax_air.get());
 		}
 
-		_control.setPositionGains(Vector3f(_param_mpc_xy_p.get(), _param_mpc_xy_p.get(), _param_mpc_z_p.get()));
+
+		/*_control.setPositionGains(Vector3f(_param_mpc_xy_p.get(), _param_mpc_xy_p.get(), _param_mpc_z_p.get()));
 		_control.setVelocityGains(
 			Vector3f(_param_mpc_xy_vel_p_acc.get(), _param_mpc_xy_vel_p_acc.get(), _param_mpc_z_vel_p_acc.get()),
 			Vector3f(_param_mpc_xy_vel_i_acc.get(), _param_mpc_xy_vel_i_acc.get(), _param_mpc_z_vel_i_acc.get()),
 			Vector3f(_param_mpc_xy_vel_d_acc.get(), _param_mpc_xy_vel_d_acc.get(), _param_mpc_z_vel_d_acc.get()));
+		_control.setHorizontalThrustMargin(_param_mpc_thr_xy_marg.get());*/
+
+		// *** CUSTOM diff gains
+		// update struct _xy_gains
+		if(_param_enable_xy_diff_gains.get()){
+			_xy_gains.x_p 	  = _param_mpc_x_p.get();
+			_xy_gains.x_vel_p = _param_mpc_x_vel_p_acc.get();
+			_xy_gains.x_vel_i = _param_mpc_x_vel_i_acc.get();
+			_xy_gains.x_vel_d = _param_mpc_x_vel_d_acc.get();
+
+			_xy_gains.y_p 	  = _param_mpc_y_p.get();
+			_xy_gains.y_vel_p = _param_mpc_y_vel_p_acc.get();
+			_xy_gains.y_vel_i = _param_mpc_y_vel_i_acc.get();
+			_xy_gains.y_vel_d = _param_mpc_y_vel_d_acc.get();
+		}else{
+			_xy_gains.x_p 	  = _param_mpc_xy_p.get();
+			_xy_gains.x_vel_p = _param_mpc_xy_vel_p_acc.get();
+			_xy_gains.x_vel_i = _param_mpc_xy_vel_i_acc.get();
+			_xy_gains.x_vel_d = _param_mpc_xy_vel_d_acc.get();
+
+			_xy_gains.y_p 	  = _param_mpc_xy_p.get();
+			_xy_gains.y_vel_p = _param_mpc_xy_vel_p_acc.get();
+			_xy_gains.y_vel_i = _param_mpc_xy_vel_i_acc.get();
+			_xy_gains.y_vel_d = _param_mpc_xy_vel_d_acc.get();
+		}
+
+		_control.setPositionGains(Vector3f(_xy_gains.x_p, _xy_gains.y_p, _param_mpc_z_p.get()));
+		_control.setVelocityGains(
+			Vector3f(_xy_gains.x_vel_p, _xy_gains.y_vel_p, _param_mpc_z_vel_p_acc.get()),
+			Vector3f(_xy_gains.x_vel_i, _xy_gains.y_vel_i, _param_mpc_z_vel_i_acc.get()),
+			Vector3f(_xy_gains.x_vel_d, _xy_gains.y_vel_d, _param_mpc_z_vel_d_acc.get()));
 		_control.setHorizontalThrustMargin(_param_mpc_thr_xy_marg.get());
+		// *** END-CUSTOM
 
 		// Check that the design parameters are inside the absolute maximum constraints
 		if (_param_mpc_xy_cruise.get() > _param_mpc_xy_vel_max.get()) {
