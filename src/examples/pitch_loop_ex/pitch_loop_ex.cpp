@@ -26,16 +26,6 @@
 
 extern "C" __EXPORT int pitch_loop_ex_main(int argc, char *argv[]);
 
-matrix::Vector<float, 4> pitch_coefficients(float start, float end, float tf){
-	matrix::Vector<float,4> coeff;
-	coeff(0) = start;
-	coeff(1) = 0.0f;
-	coeff(3) = (start - end) * 2 / powf(tf,3);
-	coeff(2) = -1.5f * coeff(3) * tf;
-
-	return coeff;
-}
-
 void print_usage(){
 	PX4_INFO("Usage: pitch_loop_ex -p <pitch_deg> <time_seconds>: publish pitch setpoint \
 		\npitch_loop_ex -o <time_seconds>: open pitch loop for specified seconds");
@@ -120,16 +110,10 @@ int pitch_loop_ex_main(int argc, char *argv[]){
 
 	// At this point, one of publish_pitch or publish_open must be true
 
-	// Compute steps and pitch coefficients
 	int steps = lround(tf/dt);
-	matrix::Vector4f coeff;
-
+	stime = hrt_absolute_time();
 	if(publish_open)
 		strncpy(debug_key.key, "open_loop", 10);
-	else if(publish_sp)
-		coeff = pitch_coefficients(pitch, des_pitch, tf);
-
-	stime = hrt_absolute_time();
 
 	int count = 0;
 	while(count < steps){
@@ -137,8 +121,10 @@ int pitch_loop_ex_main(int argc, char *argv[]){
 		if(hrt_absolute_time() - stime > 10000){
 
 			// update setpoint
-			if(publish_sp)
+			if(publish_sp){
 				debug_key.value = pitch + (des_pitch - pitch) * count / steps;	// update setpoint
+				PX4_INFO("debug_key.value: %2.2f", (double)debug_key.value); ///
+			}
 
 			debug_key.timestamp = hrt_absolute_time();
 			pub_debug_key.publish(debug_key);
