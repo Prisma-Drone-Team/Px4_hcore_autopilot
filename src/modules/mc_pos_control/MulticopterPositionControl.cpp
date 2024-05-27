@@ -609,6 +609,18 @@ void MulticopterPositionControl::Run()
 
 				}
 
+				// *** CUSTOM pitch setpoint ***
+				if(_param_debug_pitch_sp.get() && _debug_pitch_sub.updated()){
+					debug_key_value_s debug_pitch_sp;
+					if (_debug_pitch_sub.copy(&debug_pitch_sp) &&
+					    (debug_pitch_sp.timestamp > _last_angles_setpoint) ){
+						_tilting_mc_pitch_sp = math::constrain(debug_pitch_sp.value,
+							_param_des_pitch_min.get(), _param_des_pitch_max.get());
+						_last_angles_setpoint = debug_pitch_sp.timestamp;
+					}
+				}
+				// *** END-CUSTOM
+
 				/* For the H-tilting multirotor the tilt_servo angle must always be updated */
 				if(_param_tilting_type.get() == 0 && _param_mpc_pitch_on_tilt.get()){
 

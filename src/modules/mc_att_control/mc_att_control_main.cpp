@@ -271,6 +271,19 @@ MulticopterAttitudeControl::Run()
 		parameters_updated();
 	}
 
+	// *** CUSTOM open/close pitch setpoint
+	if(_param_debug_pitch_loop.get() && _debug_pitch_sub.updated()){
+		debug_key_value_s pitch_loop_cmd;
+		if(_debug_pitch_sub.copy(&pitch_loop_cmd)){
+			if(strcmp(pitch_loop_cmd.key, "open_loop") == 0){
+				_attitude_control.setPitchOpenLoop(true);
+				_last_pitch_loop_cmd_timestamp = pitch_loop_cmd.timestamp;
+			}else
+				_attitude_control.setPitchOpenLoop(false);
+		}
+	}
+	// *** END-CUSTOM
+
 	// run controller on attitude updates
 	vehicle_attitude_s v_att;
 
@@ -281,6 +294,15 @@ MulticopterAttitudeControl::Run()
 		_last_run = v_att.timestamp_sample;
 
 		const Quatf q{v_att.q};
+
+		// *** CUSTOM open/close pitch loop
+		// Guard for open pitch loop cmd minimum rate
+		if(_attitude_control.isPitchLoopOpened() &&
+			_last_run - _last_pitch_loop_cmd_timestamp > 1e6f/_param_debug_pitch_min_rate.get()){
+			_attitude_control.setPitchOpenLoop(false);
+			PX4_WARN("Open pitch loop cmd minimum rate not satisfied. Pitch loop is now closed.");
+		}
+		// *** END-CUSTOM
 
 		// Check for new attitude setpoint
 		if (_vehicle_attitude_setpoint_sub.updated()) {

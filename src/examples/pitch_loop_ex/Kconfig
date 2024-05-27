@@ -1,0 +1,5 @@
+menuconfig EXAMPLES_PITCH_LOOP_EX
+	bool "pitch_loop_ex"
+	default n
+	---help---
+		Enable support for pitch_loop ex

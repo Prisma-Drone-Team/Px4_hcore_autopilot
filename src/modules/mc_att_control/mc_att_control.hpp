@@ -62,6 +62,10 @@
 #include <uORB/topics/tilting_servo_sp.h>
 /*** END-CUSTOM ***/
 
+// *** CUSTOM pitch setpoint ***/
+#include <uORB/topics/debug_key_value.h>	// to receive open/close pitch loop
+// *** END-CUSTOM ***/
+
 
 #include <AttitudeControl.hpp>
 
@@ -152,8 +156,12 @@ private:
 	AlphaFilter<float> _man_Fx_input_filter;
 	AlphaFilter<float> _man_Fy_input_filter;
 	float _man_F_max;
-
 	/*** END-CUSTOM ***/
+
+	// *** CUSTOM pitch setpoint
+	uORB::Subscription _debug_pitch_sub {ORB_ID(debug_key_value)};
+	hrt_abstime _last_pitch_loop_cmd_timestamp {0};
+	// *** END-CUSTOM
 
 	DEFINE_PARAMETERS(
 		(ParamInt<px4::params::MC_AIRMODE>)         _param_mc_airmode,
@@ -180,13 +188,16 @@ private:
     		(ParamFloat<px4::params::COM_SPOOLUP_TIME>) _param_com_spoolup_time,
 
 		/*** CUSTOM ***/
-
 		(ParamInt<px4::params::MC_PITCH_ON_TILT>)   _param_mpc_pitch_on_tilt,   /**< map the pitch angle on the tilt */
 		(ParamInt<px4::params::CA_TILTING_TYPE>)    _param_tilting_type,	/**< 0: H-tilt, 1: omnidirectional */
 		(ParamInt<px4::params::CA_AIRFRAME>)	    _param_airframe,		/**< 11: tilting multirotor */
 		(ParamFloat<px4::params::MC_MAX_FXY>)       _param_f_max		/**< maximum horizontal force for omni drones*/
-
 		/*** END-CUSTOM ***/
+
+		// *** CUSTOM pitch setpoint
+		, (ParamBool<px4::params::DEBUG_PITCH_LOOP>)  _param_debug_pitch_loop		// get pitch open/close command on debug_key_value topic
+		, (ParamInt<px4::params::DEBUG_PITCH_RATE>)   _param_debug_pitch_min_rate	// minimum rate for pitch open loop cmd
+		// *** END-CUSTOM
 
 	)
 };

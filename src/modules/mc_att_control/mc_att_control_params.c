@@ -184,3 +184,33 @@ PARAM_DEFINE_FLOAT(MC_MAX_FXY, 0.15f);
 
 
 // *** END-CUSTOM ***
+
+
+/*** CUSTOM pitch setpoint debug */
+
+/**
+ * Enable listening to pitch loop open and close command from debug_key_value
+ *
+ * You can send from MAVLINK a "open_loop" or "close_loop" command on
+ * the debug_key_value topic to open or close the pitch loop control.
+ * You need to send the command "open_loop" at a rate at least equal to
+ * DEBUG_PITCH_RATE, or otherwise the loop will be closed for safety reasons.
+ *
+ * @boolean
+ * @group Pitch control
+ */
+PARAM_DEFINE_INT32(DEBUG_PITCH_LOOP, 0);
+
+/**
+ * Minimum rate of publishing pitch open loop cmd.
+ *
+ * If you open pitch loop through the "open_loop" cmd on debug_key_value topic,
+ * you need to send the cmd repeatedly at a rate at least equal to this parameter.
+ * If you do not, the pitch loop will be automatically closed.
+ *
+ * @unit Hz
+ * @group Pitch control
+ */
+PARAM_DEFINE_INT32(DEBUG_PITCH_RATE, 10);
+
+/*** END-CUSTOM ***/

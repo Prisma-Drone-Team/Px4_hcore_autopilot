@@ -132,5 +132,22 @@ PARAM_DEFINE_FLOAT(MC_DES_ROLL_MAX, 10.0f);
 */
 PARAM_DEFINE_FLOAT(MC_DES_ROLL_MIN, -10.0f);
 
+/*** END-CUSTOM ***/
+
+
+/*** CUSTOM pitch setpoint debug */
+
+/**
+ * Enable listening to pitch setpoint from debug_key_value
+ *
+ * You can send from MAVLINK a pitch setpoint in radians on
+ * the debug_key_value topic. Please note that MAVLINK works on
+ * ENU frame, while PX4 works on NED frame, so you should change
+ * the sign of the pitch setpoint.
+ *
+ * @boolean
+ * @group Pitch control
+ */
+PARAM_DEFINE_INT32(DEBUG_PITCH_SP, 0);
 
 /*** END-CUSTOM ***/

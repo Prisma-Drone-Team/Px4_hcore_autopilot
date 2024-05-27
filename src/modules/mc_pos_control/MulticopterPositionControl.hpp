@@ -64,10 +64,15 @@
 #include <uORB/topics/vehicle_land_detected.h>
 #include <uORB/topics/vehicle_local_position.h>
 #include <uORB/topics/vehicle_local_position_setpoint.h>
+
 /*** CUSTOM ***/
 #include <uORB/topics/tilting_mc_desired_angles.h>
 #include <uORB/topics/tilting_servo_sp.h>
 /*** END-CUSTOM ***/
+
+// *** CUSTOM pitch setpoint ***/
+#include <uORB/topics/debug_key_value.h>	// to receive body pitch setpoint
+// *** END-CUSTOM ***/
 
 using namespace time_literals;
 
@@ -118,6 +123,10 @@ private:
 	tilting_servo_sp_s _tilting_servo_sp {};
 	hrt_abstime _last_angles_setpoint{0};
 	// /*** END-CUSTOM ***/
+
+	// *** CUSTOM pitch setpoint
+	uORB::Subscription _debug_pitch_sub {ORB_ID(debug_key_value)};
+	// *** END-CUSTOM
 
 	hrt_abstime _time_stamp_last_loop{0};		/**< time stamp of last loop iteration */
 	hrt_abstime _time_position_control_enabled{0};
@@ -199,8 +208,11 @@ private:
 		(ParamFloat<px4::params::MC_DES_PITCH_MIN>) _param_des_pitch_min,	/**< minimum desired pitch for tilting drones*/
 		(ParamFloat<px4::params::MC_DES_ROLL_MAX>)  _param_des_roll_max,	/**< maximum desired roll for tilting drones*/
 		(ParamFloat<px4::params::MC_DES_ROLL_MIN>)  _param_des_roll_min		/**< minimum desired roll for tilting drones*/
-
 		/*** END-CUSTOM ***/
+
+		// *** CUSTOM pitch setpoint
+		, (ParamBool<px4::params::DEBUG_PITCH_SP>)  _param_debug_pitch_sp	// get pitch setpoint from debug_key_value topic
+		// *** END-CUSTOM
 	);
 
 	control::BlockDerivative _vel_x_deriv; /**< velocity derivative in x */

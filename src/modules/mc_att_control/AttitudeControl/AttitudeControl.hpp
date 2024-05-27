@@ -100,6 +100,14 @@ public:
 	 */
 	matrix::Vector3f update(const matrix::Quatf &q) const;
 
+	// *** CUSTOM open/close pitch loop
+	void setPitchOpenLoop(bool loop){
+		_pitchOpenLoop = loop;
+	}
+
+	bool isPitchLoopOpened(){ return _pitchOpenLoop; }
+	// *** END-CUSTOM
+
 private:
 	matrix::Vector3f _proportional_gain;
 	matrix::Vector3f _rate_limit;
@@ -107,4 +115,8 @@ private:
 
 	matrix::Quatf _attitude_setpoint_q; ///< latest known attitude setpoint e.g. from position control
 	float _yawspeed_setpoint{0.f}; ///< latest known yawspeed feed-forward setpoint
+
+	// *** CUSTOM open/close pitch loop
+	bool _pitchOpenLoop {false};
+	// *** END-CUSTOM
 };
