@@ -122,6 +122,15 @@ private:
 	float _tilting_mc_pitch_sp{0.0f};
 	tilting_servo_sp_s _tilting_servo_sp {};
 	hrt_abstime _last_angles_setpoint{0};
+	// *** CUSTOM xy separated gains
+	struct {
+		float x_p    {0.0f}, 	y_p    {0.0f};
+		float x_vel_p{0.0f}, 	y_vel_p{0.0f};
+		float x_vel_i{0.0f}, 	y_vel_i{0.0f};
+		float x_vel_d{0.0f}, 	y_vel_d{0.0f};
+	} _xy_gains;
+
+
 	// /*** END-CUSTOM ***/
 
 	// *** CUSTOM pitch setpoint
@@ -208,6 +217,18 @@ private:
 		(ParamFloat<px4::params::MC_DES_PITCH_MIN>) _param_des_pitch_min,	/**< minimum desired pitch for tilting drones*/
 		(ParamFloat<px4::params::MC_DES_ROLL_MAX>)  _param_des_roll_max,	/**< maximum desired roll for tilting drones*/
 		(ParamFloat<px4::params::MC_DES_ROLL_MIN>)  _param_des_roll_min		/**< minimum desired roll for tilting drones*/
+
+		// *** xy diff gains
+		,(ParamBool<px4::params::MPC_XY_DIFFGAINS>)	_param_enable_xy_diff_gains
+		,(ParamFloat<px4::params::MPC_X_P>)       	_param_mpc_x_p
+		,(ParamFloat<px4::params::MPC_Y_P>)       	_param_mpc_y_p
+		,(ParamFloat<px4::params::MPC_X_VEL_P_ACC>)     _param_mpc_x_vel_p_acc
+		,(ParamFloat<px4::params::MPC_Y_VEL_P_ACC>)     _param_mpc_y_vel_p_acc
+		,(ParamFloat<px4::params::MPC_X_VEL_I_ACC>)     _param_mpc_x_vel_i_acc
+		,(ParamFloat<px4::params::MPC_Y_VEL_I_ACC>)     _param_mpc_y_vel_i_acc
+		,(ParamFloat<px4::params::MPC_X_VEL_D_ACC>)     _param_mpc_x_vel_d_acc
+		,(ParamFloat<px4::params::MPC_Y_VEL_D_ACC>)     _param_mpc_y_vel_d_acc
+
 		/*** END-CUSTOM ***/
 
 		// *** CUSTOM pitch setpoint
