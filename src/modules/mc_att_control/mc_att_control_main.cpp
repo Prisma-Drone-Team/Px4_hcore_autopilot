@@ -297,7 +297,7 @@ MulticopterAttitudeControl::Run()
 
 		// *** CUSTOM open/close pitch loop
 		// Guard for open pitch loop cmd minimum rate
-		if(_attitude_control.isPitchLoopOpened() &&
+		if(_attitude_control.isPitchLoopOpened() && _param_debug_pitch_min_rate.get() > 0 &&
 			_last_run - _last_pitch_loop_cmd_timestamp > 1e6f/_param_debug_pitch_min_rate.get()){
 			_attitude_control.setPitchOpenLoop(false);
 			PX4_WARN("Open pitch loop cmd minimum rate not satisfied. Pitch loop is now closed.");

@@ -207,8 +207,11 @@ PARAM_DEFINE_INT32(DEBUG_PITCH_LOOP, 0);
  * If you open pitch loop through the "open_loop" cmd on debug_key_value topic,
  * you need to send the cmd repeatedly at a rate at least equal to this parameter.
  * If you do not, the pitch loop will be automatically closed.
+ * Set equal to zero to remove minimum rate check.
  *
  * @unit Hz
+ * @min 0
+ * @max 100
  * @group Pitch control
  */
 PARAM_DEFINE_INT32(DEBUG_PITCH_RATE, 10);
