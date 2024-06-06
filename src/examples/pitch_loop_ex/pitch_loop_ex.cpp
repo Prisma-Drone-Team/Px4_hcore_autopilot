@@ -14,6 +14,9 @@
 #include <systemlib/err.h>
 #include <drivers/drv_hrt.h>
 
+#include <px4_platform_common/log.h>
+#include <px4_platform_common/module.h>
+
 #include <uORB/uORB.h>
 #include <uORB/Publication.hpp>
 #include <uORB/Subscription.hpp>
@@ -27,8 +30,9 @@
 extern "C" __EXPORT int pitch_loop_ex_main(int argc, char *argv[]);
 
 void print_usage(){
-	PX4_INFO("Usage: pitch_loop_ex -p <pitch_deg> <time_seconds>: publish pitch setpoint \
-		\npitch_loop_ex -o <time_seconds>: open pitch loop for specified seconds");
+	PRINT_MODULE_USAGE_NAME("pitch_loop_ex", "command");
+	PRINT_MODULE_USAGE_COMMAND_DESCR("-p <pitch_deg> <time_seconds>", "Publish pitch setpoint");
+	PRINT_MODULE_USAGE_COMMAND_DESCR("-o <time_seconds>", "Open pitch loop for specified seconds");
 }
 
 
