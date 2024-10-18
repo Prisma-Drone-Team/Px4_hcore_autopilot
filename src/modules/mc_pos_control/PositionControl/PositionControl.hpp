@@ -184,6 +184,14 @@ public:
 	 */
 	static const trajectory_setpoint_s empty_trajectory_setpoint;
 
+	// *** CUSTOM diffgains***
+	/**
+	 * Set if rotate error to apply different gains to x_body and y_body
+	 * @param dg diff dains
+	 */
+	void setDiffGains(const bool dg);
+	// *** END-CUSTOM ***
+
 private:
 	// The range limits of the hover thrust configuration/estimate
 	static constexpr float HOVER_THRUST_MIN = 0.05f;
@@ -228,7 +236,8 @@ private:
 	float _yawspeed_sp{}; /** desired yaw-speed */
 
 
-	// *** CUSTOM ***
+	// *** CUSTOM diffgains***
 	void _rotateXY(matrix::Vector3f& v, float angle);
+	bool _diffgains_on;
 	// *** END-CUSTOM ***
 };

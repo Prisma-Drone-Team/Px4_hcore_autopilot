@@ -228,6 +228,8 @@ private:
 		,(ParamFloat<px4::params::MPC_Y_VEL_I_ACC>)     _param_mpc_y_vel_i_acc
 		,(ParamFloat<px4::params::MPC_X_VEL_D_ACC>)     _param_mpc_x_vel_d_acc
 		,(ParamFloat<px4::params::MPC_Y_VEL_D_ACC>)     _param_mpc_y_vel_d_acc
+		// *** xy diff gains
+		,(ParamFloat<px4::params::MPC_SERVO_K>)		_param_servo_k
 
 		/*** END-CUSTOM ***/
 

@@ -122,3 +122,17 @@ PARAM_DEFINE_FLOAT(MPC_X_VEL_D_ACC, 0.2f);
  * @group Multicopter Position Control
  */
 PARAM_DEFINE_FLOAT(MPC_Y_VEL_D_ACC, 0.2f);
+
+
+/**
+ * Multiplier gain for servo pitch actuation
+ *
+ * multiply pitch setpoint from pos-vel controller before apply to servo
+ *
+ * @min 0.1
+ * @max 5
+ * @decimal 2
+ * @increment 0.1
+ * @group Multicopter Position Control
+ */
+PARAM_DEFINE_FLOAT(MPC_SERVO_K, 1.0f);

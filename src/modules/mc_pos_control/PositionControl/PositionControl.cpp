@@ -110,11 +110,14 @@ bool PositionControl::update(const float dt)
 	bool valid = _inputValid();
 
 	if (valid) {
-		_positionControl();
-		_velocityControl(dt);
+		// _positionControl();
+		// _velocityControl(dt);
 
 		_yawspeed_sp = PX4_ISFINITE(_yawspeed_sp) ? _yawspeed_sp : 0.f;
 		_yaw_sp = PX4_ISFINITE(_yaw_sp) ? _yaw_sp : _yaw; // TODO: better way to disable yaw control
+		// *** CUSTOM diffgains *** need to use _yaw_sp in error rotation not onli in getAttitudeSetpoint
+		_positionControl();
+		_velocityControl(dt);
 	}
 
 	// There has to be a valid output acceleration and thrust setpoint otherwise something went wrong
@@ -127,12 +130,18 @@ void PositionControl::_positionControl()
 	// P-position controller
 	//Vector3f vel_sp_position = (_pos_sp - _pos).emult(_gain_pos_p);
 
+	;
 	// *** CUSTOM ***
-	Vector3f p_err = _pos_sp - _pos;
+	Vector3f vel_sp_position; // = (_pos_sp - _pos).emult(_gain_pos_p);
+	if(_diffgains_on){
+		Vector3f p_err = _pos_sp - _pos;
+		_rotateXY(p_err, -_yaw_sp); //was _yaw
+		vel_sp_position = p_err.emult(_gain_pos_p);
+		_rotateXY(vel_sp_position, _yaw_sp); //was _yaw
+	} else{
+		vel_sp_position = (_pos_sp - _pos).emult(_gain_pos_p);
+	}
 
-	_rotateXY(p_err, -_yaw);
-	Vector3f vel_sp_position = p_err.emult(_gain_pos_p);
-	_rotateXY(vel_sp_position, _yaw);
 	// *** END-CUSTOM ***
 
 	// Position and feed-forward velocity setpoints or position states being NAN results in them not having an influence
@@ -157,9 +166,15 @@ void PositionControl::_velocityControl(const float dt)
 	//Vector3f acc_sp_velocity = vel_error.emult(_gain_vel_p) + _vel_int - _vel_dot.emult(_gain_vel_d);
 
 	// *** CUSTOM ***
-	_rotateXY(vel_error, -_yaw);
-	Vector3f acc_sp_velocity = vel_error.emult(_gain_vel_p) + _vel_int - _vel_dot.emult(_gain_vel_d);
-	_rotateXY(acc_sp_velocity, _yaw);
+	Vector3f acc_sp_velocity;
+	if(_diffgains_on){
+		_rotateXY(vel_error, -_yaw_sp); //was _yaw
+		acc_sp_velocity = vel_error.emult(_gain_vel_p) + _vel_int - _vel_dot.emult(_gain_vel_d);
+		_rotateXY(acc_sp_velocity, _yaw_sp); //was _yaw
+	} else{
+		acc_sp_velocity = vel_error.emult(_gain_vel_p) + _vel_int - _vel_dot.emult(_gain_vel_d);
+	}
+
 	// *** END-CUSTOM ***
 
 	// No control input from setpoints or corresponding states which are NAN
@@ -282,5 +297,8 @@ void PositionControl::getAttitudeSetpoint(vehicle_attitude_setpoint_s &attitude_
 void PositionControl::_rotateXY(matrix::Vector3f& v, float angle){
 	Vector2f temp = v.xy();
 	v.xy() = Dcm2f(angle) * temp;
+}
+void PositionControl::setDiffGains(const bool dg){
+	_diffgains_on = dg;
 }
 // *** END-CUSTOM ***

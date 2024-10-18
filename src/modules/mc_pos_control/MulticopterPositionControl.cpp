@@ -185,6 +185,7 @@ void MulticopterPositionControl::parameters_update(bool force)
 			_xy_gains.y_vel_p = _param_mpc_y_vel_p_acc.get();
 			_xy_gains.y_vel_i = _param_mpc_y_vel_i_acc.get();
 			_xy_gains.y_vel_d = _param_mpc_y_vel_d_acc.get();
+			_control.setDiffGains(true);
 		}else{
 			_xy_gains.x_p 	  = _param_mpc_xy_p.get();
 			_xy_gains.x_vel_p = _param_mpc_xy_vel_p_acc.get();
@@ -195,6 +196,7 @@ void MulticopterPositionControl::parameters_update(bool force)
 			_xy_gains.y_vel_p = _param_mpc_xy_vel_p_acc.get();
 			_xy_gains.y_vel_i = _param_mpc_xy_vel_i_acc.get();
 			_xy_gains.y_vel_d = _param_mpc_xy_vel_d_acc.get();
+			_control.setDiffGains(false);
 		}
 
 		_control.setPositionGains(Vector3f(_xy_gains.x_p, _xy_gains.y_p, _param_mpc_z_p.get()));
@@ -658,7 +660,8 @@ void MulticopterPositionControl::Run()
 				if(_param_tilting_type.get() == 0 && _param_mpc_pitch_on_tilt.get()){
 
 					_tilting_servo_sp.angle[0] = attitude_setpoint.pitch_body - _tilting_mc_pitch_sp;
-					_tilting_mc_roll_sp = attitude_setpoint.roll_body;
+					_tilting_servo_sp.angle[0] =_tilting_servo_sp.angle[0] * _param_servo_k.get();  //apply gain to servo angle
+					_tilting_mc_roll_sp = attitude_setpoint.roll_body; //TODO mettere sopra con i suoi amici
 
 					_tilting_servo_sp.timestamp = hrt_absolute_time();
 					_tilting_servo_setpoint_pub.publish(_tilting_servo_sp);
