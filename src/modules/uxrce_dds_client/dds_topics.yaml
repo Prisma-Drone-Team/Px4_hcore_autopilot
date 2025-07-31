@@ -47,6 +47,12 @@ publications:
   - topic: /fmu/out/vehicle_trajectory_waypoint_desired
     type: px4_msgs::msg::VehicleTrajectoryWaypoint
 
+  # - topic: /fmu/out/sensor_optical_flow
+  #   type: px4_msgs::msg::SensorOpticalFlow
+
+  # - topic: /fmu/out/rc_channels
+  #   type: px4_msgs::msg::RcChannels
+
 subscriptions:
 
   - topic: /fmu/in/offboard_control_mode
@@ -58,8 +64,8 @@ subscriptions:
   - topic: /fmu/in/obstacle_distance
     type: px4_msgs::msg::ObstacleDistance
 
-  - topic: /fmu/in/sensor_optical_flow
-    type: px4_msgs::msg::SensorOpticalFlow
+  # - topic: /fmu/in/sensor_optical_flow
+  #   type: px4_msgs::msg::SensorOpticalFlow
 
   - topic: /fmu/in/telemetry_status
     type: px4_msgs::msg::TelemetryStatus
