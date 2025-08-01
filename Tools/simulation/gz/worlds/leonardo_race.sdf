@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <sdf version="1.9">
-  <world name="default">
+  <world name="leonardo_race">
     <physics type="ode">
       <max_step_size>0.004</max_step_size>
       <real_time_factor>1.0</real_time_factor>
@@ -217,7 +217,7 @@
       <uri>model://leo_race_field</uri>
       <pose>9.50 4.0 -0.1 0 0 0</pose>
       <static>1</static>
-            
+
       </include>
     </model>
     <light name="sunUTC" type="directional">
