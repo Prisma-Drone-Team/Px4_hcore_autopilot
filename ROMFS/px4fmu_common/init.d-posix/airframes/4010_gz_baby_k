@@ -10,6 +10,7 @@
 PX4_SIMULATOR=${PX4_SIMULATOR:=gz}
 PX4_GZ_WORLD=${PX4_GZ_WORLD:=leonardo_race}
 PX4_SIM_MODEL=${PX4_SIM_MODEL:=baby_k}
+# PX4_GZ_MODEL_POSE=${PX4_GZ_MODEL_POSE:="-9.5 -3.5 0.5 0 0 0"}
 
 
 param set-default SIM_GZ_EN 1
