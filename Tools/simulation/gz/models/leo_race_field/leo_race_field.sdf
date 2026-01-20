@@ -46,6 +46,7 @@
     </include>
 
     <!-- Unknown Obstacles-->
+    
     <include>
       <name>unknown_obst_1</name> <!--high tower-->
       <pose> -1.5 1.5 0.1 0 0 0</pose>
@@ -58,23 +59,23 @@
       <uri>model://leo_race_field/unknown_obst_2</uri>
     </include> 
 
-    <include>
-      <name>unknown_obst_3 </name> <!--low tower-->
+    <!--<include>
+      <name>unknown_obst_3 </name> 
       <pose> -8 0.5 0.1 0 0 0</pose>
       <uri>model://leo_race_field/unknown_obst_3</uri>
-    </include> 
+    </include> -->
 
-    <include>
-      <name>unknown_tunnel_1 </name> <!--low tower-->
+    <!--<include>
+      <name>unknown_tunnel_1 </name> 
       <pose> -3.2 -1.5 0.1 0 0 2.355 </pose>
       <uri>model://leo_race_field/unknown_tunnel_1</uri>
-    </include> 
+    </include> -->
 
-    <include>
-      <name>unknown_tunnel_2 </name> <!--low tower-->
+    <!--<include>
+      <name>unknown_tunnel_2 </name> 
       <pose> -2 3.5 0.1 0 0 -1.57 </pose>
       <uri>model://leo_race_field/unknown_tunnel_2</uri>
-    </include> 
+    </include> -->
 
     <include>
       <name>start_pod </name> <!--low tower-->
@@ -83,20 +84,20 @@
     </include> 
 
     <!-- Intruders -->
-    <include>
+    <!--<include>
       <name>intruder_one</name>
       <pose> 7.5 -0.5 0.1 0 0 0</pose>
       <uri>model://leo_race_field/intruder</uri>
-    </include>
+    </include>-->
 
-    <include>
+    <!--<include>
       <name>intruder_two</name>
       <pose> -0.5 -2.5 0.1 0 0 0</pose>
       <uri>model://leo_race_field/intruder</uri>
-    </include>
+    </include>-->
     
     <!-- ArucoTag -->
-    <include>
+    <!-- <include>
       <name>arucotag_0</name>
       <pose>-3.0 4.9 1.5 1.57 0 0</pose>
       <uri>model://leo_race_field/arucotag_0</uri>
@@ -106,6 +107,90 @@
       <name>arucotag_1</name>
       <pose>3.5 3.45 1.5 1.57 0 0</pose>
       <uri>model://leo_race_field/arucotag_1</uri>
+    </include> -->
+    <include>
+      <name>arucotag_147</name>
+      <pose>-9.9 0 1.5 1.57 0 1.57</pose>
+      <uri>model://leo_race_field/arucotag_147</uri>
+    </include>
+    
+    <include>
+      <name>arucotag_157</name>
+      <pose>-1.1 1.45 1.5 1.57 0 1.57</pose>
+      <uri>model://leo_race_field/arucotag_157</uri>
+    </include> 
+    
+    <include>
+      <name>arucotag_169</name>
+      <pose>7.8 3.3 1.5 1.57 0 -1.57</pose>
+      <uri>model://leo_race_field/arucotag_169</uri>
+    </include>
+    
+    <include>
+      <name>arucotag_175</name>
+      <pose>8.3 -2.45 1.5 1.57 0 3.14159</pose>
+      <uri>model://leo_race_field/arucotag_175</uri>
+    </include>
+    
+    <include>
+      <name>arucotag_181</name>
+      <pose>3.5 3.45 1.5 1.57 0 0</pose>
+      <uri>model://leo_race_field/arucotag_181</uri>
+    </include>
+    
+    <!-- New ArUco Tags - Height 0.5m -->
+    <include>
+      <name>arucotag_182</name>
+      <pose>-5.0 4.9 0.5 1.57 0 0</pose>
+      <uri>model://leo_race_field/arucotag_182</uri>
+    </include>
+    
+    <include>
+      <name>arucotag_215</name>
+      <pose>6.0 -4.5 1.5 1.57 0 3.14159</pose>
+      <uri>model://leo_race_field/arucotag_215</uri>
+    </include>
+    
+    <include>
+      <name>arucotag_223</name>
+      <pose>-3.5 -4.9 0.5 1.57 0 3.14159</pose>
+      <uri>model://leo_race_field/arucotag_223</uri>
+    </include>
+    
+    <include>
+      <name>arucotag_274</name>
+      <pose>6.0 4.95 0.5 1.57 0 0</pose>
+      <uri>model://leo_race_field/arucotag_274</uri>
+    </include>
+    
+    <include>
+      <name>arucotag_287</name>
+      <pose>4.0 -1.5 0.5 1.57 0 0.0</pose>
+      <uri>model://leo_race_field/arucotag_287</uri>
+    </include>
+    
+    <include>
+      <name>teddy_bear</name>
+      <pose>2.75 -3.0 0.25 1.57 0.0 -1.57</pose>
+      <uri>model://leo_race_field/teddy_bear</uri>
+    </include>
+    
+    <include>
+      <name>hydrant</name>
+      <pose>6.0 3.0 0.35 1.57 0 0.0</pose>
+      <uri>model://leo_race_field/hydrant</uri>
+    </include>
+    
+    <include>
+      <name>plant_pot</name>
+      <pose>-8.0 3.5 0.35 1.57 0 0.0</pose>
+      <uri>model://leo_race_field/plant_pot</uri>
+    </include>
+    
+    <include>
+      <name>traf_light</name>
+      <pose>8.0 0.1 0.45 1.57 0.0 -1.57</pose>
+      <uri>model://leo_race_field/traf_light</uri>
     </include>
     
   </model>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version='1.9'>
+  <model name='NDT_tilting_interaction'>
+
+    <include merge="true">
+      <uri>model://NDT_tilting</uri>
+    </include>
+
+    <link name="end_eff">
+      <pose>0.4 0 0.05 0.0 1.57 0</pose>
+      <inertial>
+      <pose>0 0 0 0 0 0</pose>
+      <mass>0.05</mass>
+      <inertia>
+        <ixx>0.001529</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.001361</iyy>
+        <iyz>0</iyz>
+        <izz>0.000448</izz>
+      </inertia>
+      </inertial>
+      <collision name="end_eff_collision">
+      <geometry>
+        <cylinder>
+        <radius>0.02</radius>
+        <length>0.5</length>
+        </cylinder>
+      </geometry>
+      <surface>
+        <contact>
+        <ode/>
+        </contact>
+        <friction>
+        <ode>
+          <mu>2.0</mu>
+          <mu2>2.0</mu2>
+          <slip1>0.1</slip1>
+          <slip2>0.1</slip2>
+        </ode>
+        </friction>
+      </surface>
+      </collision>
+      <visual name="end_eff_visual">
+      <geometry>
+        <cylinder>
+        <radius>0.02</radius>
+        <length>0.5</length>
+        </cylinder>
+      </geometry>
+      <material>
+        <script>
+        <uri>file://media/materials/scripts/gazebo.material</uri>
+        <name>Gazebo/Grey</name>
+        </script>
+      </material>
+      </visual>
+      <gravity>1</gravity>
+      <velocity_decay>
+      <linear>0.2</linear>
+      <angular>0.2</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+    </link>
+
+    <joint name="end_eff_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>end_eff</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <link name="end_eff_sens">
+      <pose>0.655 0 0.05 0.0 -1.57 0</pose>
+      <inertial>
+      <pose>0 0 0 0 0 0</pose>
+      <mass>0.005</mass>
+      <inertia>
+        <ixx>0.000001461</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.000001461</iyy>
+        <iyz>0</iyz>
+        <izz>0.000001461</izz>
+      </inertia>
+      </inertial>
+      <collision name="end_eff_sens_collision">
+      <geometry>
+        <cylinder>
+        <radius>0.1</radius>
+        <length>0.01</length>
+        </cylinder>
+      </geometry>
+      <surface>
+        <contact>
+        <ode/>
+        </contact>
+        <friction>
+        <ode>
+          <mu>2.0</mu>
+          <mu2>2.0</mu2>
+          <slip1>0.1</slip1>
+          <slip2>0.1</slip2>
+        </ode>
+        </friction>
+      </surface>
+      </collision>
+      <visual name="end_eff_sens_visual">
+      <geometry>
+        <cylinder>
+        <radius>0.1</radius>
+        <length>0.01</length>
+        </cylinder>
+      </geometry>
+      <material>
+        <script>
+        <uri>file://media/materials/scripts/gazebo.material</uri>
+        <name>Gazebo/Blue</name>
+        </script>
+      </material>
+      </visual>
+      <gravity>1</gravity>
+      <velocity_decay>
+      <linear>0.2</linear>
+      <angular>0.2</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+      <sensor name="contact_tl" type="contact">
+        <always_on>1</always_on>
+        <visualize>1</visualize>
+        <update_rate>1000</update_rate>
+        <contact>
+          <collision>end_eff_sens_collision</collision>
+        </contact>
+      </sensor>
+    </link>
+
+    <joint name="end_eff_sens_joint" type="fixed">
+      <parent>end_eff</parent>
+      <child>end_eff_sens</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+  </model>
+</sdf>
+

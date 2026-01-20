@@ -215,7 +215,7 @@
     <model name="leo_race_field">
       <include>
       <uri>model://leo_race_field</uri>
-      <pose>9.50 4.0 -0.1 0 0 0</pose>
+      <pose>9.0 3.75 -0.1 0 0 0</pose>
       <static>1</static>
 
       </include>

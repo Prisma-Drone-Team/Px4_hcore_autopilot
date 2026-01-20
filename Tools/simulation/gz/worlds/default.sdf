@@ -66,6 +66,14 @@
         <iterations>1</iterations>
       </plugin>
       <plugin name='Entity tree' filename='EntityTree'/>
+      <!-- <plugin filename="VisualizeLidar" name="Visualize Lidar - Front Bottom">
+      </plugin>
+      <plugin filename="VisualizeLidar" name="Visualize Lidar - Front Left">
+      </plugin>
+      <plugin filename="VisualizeLidar" name="Visualize Lidar - Front Right">
+      </plugin>
+      <plugin filename="VisualizeLidar" name="Visualize Lidar - Front Top">
+      </plugin> -->
     </gui>
     <gravity>0 0 -9.8</gravity>
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>

@@ -82,6 +82,9 @@ px4_add_romfs_files(
 	4008_gz_advanced_plane
 
 	4010_gz_baby_k
+	4011_gz_NDT_tilting
+	4012_gz_NDT_tilting_interaction
+	4013_gz_NDT_tilting_augmented
 
 	6011_gazebo-classic_typhoon_h480
 	6011_gazebo-classic_typhoon_h480.post

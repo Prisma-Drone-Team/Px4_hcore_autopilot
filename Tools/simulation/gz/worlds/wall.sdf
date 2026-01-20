@@ -1,0 +1,233 @@
+<?xml version="1.0" ?>
+<sdf version='1.7'>
+	<world name='wall'>
+		<physics type="ode">
+			<max_step_size>0.004</max_step_size>
+			<real_time_factor>1.0</real_time_factor>
+			<real_time_update_rate>250</real_time_update_rate>
+		</physics>
+		<plugin name='gz::sim::systems::Physics' filename='gz-sim-physics-system'/>
+		<plugin name='gz::sim::systems::UserCommands' filename='gz-sim-user-commands-system'/>
+		<plugin name='gz::sim::systems::SceneBroadcaster' filename='gz-sim-scene-broadcaster-system'/>
+		<plugin name='gz::sim::systems::Contact' filename='gz-sim-contact-system'/>
+		<plugin name='gz::sim::systems::Imu' filename='gz-sim-imu-system'/>
+		<plugin name='gz::sim::systems::AirPressure' filename='gz-sim-air-pressure-system'/>
+		<plugin name='gz::sim::systems::ApplyLinkWrench' filename='gz-sim-apply-link-wrench-system'/>
+		<plugin name='gz::sim::systems::Sensors' filename='gz-sim-sensors-system'>
+			<render_engine>ogre2</render_engine>
+		</plugin>
+		<gui fullscreen='false'>
+			<plugin name='3D View' filename='GzScene3D'>
+				<gz-gui>
+					<title>3D View</title>
+					<property type='bool' key='showTitleBar'>0</property>
+					<property type='string' key='state'>docked</property>
+				</gz-gui>
+				<engine>ogre2</engine>
+				<scene>scene</scene>
+				<ambient_light>0.5984631152222222 0.5984631152222222 0.5984631152222222</ambient_light>
+				<background_color>0.8984631152222222 0.8984631152222222 0.8984631152222222</background_color>
+				<camera_pose>-6 0 6 0 0.5 0</camera_pose>
+			</plugin>
+			<plugin name='World control' filename='WorldControl'>
+				<gz-gui>
+					<title>World control</title>
+					<property type='bool' key='showTitleBar'>0</property>
+					<property type='bool' key='resizable'>0</property>
+					<property type='double' key='height'>72</property>
+					<property type='double' key='width'>121</property>
+					<property type='double' key='z'>1</property>
+					<property type='string' key='state'>floating</property>
+					<anchors target='3D View'>
+						<line own='left' target='left'/>
+						<line own='bottom' target='bottom'/>
+					</anchors>
+				</gz-gui>
+				<play_pause>1</play_pause>
+				<step>1</step>
+				<start_paused>1</start_paused>
+			</plugin>
+			<plugin name='World stats' filename='WorldStats'>
+				<gz-gui>
+					<title>World stats</title>
+					<property type='bool' key='showTitleBar'>0</property>
+					<property type='bool' key='resizable'>0</property>
+					<property type='double' key='height'>110</property>
+					<property type='double' key='width'>290</property>
+					<property type='double' key='z'>1</property>
+					<property type='string' key='state'>floating</property>
+					<anchors target='3D View'>
+						<line own='right' target='right'/>
+						<line own='bottom' target='bottom'/>
+					</anchors>
+				</gz-gui>
+				<sim_time>1</sim_time>
+				<real_time>1</real_time>
+				<real_time_factor>1</real_time_factor>
+				<iterations>1</iterations>
+			</plugin>
+			<plugin name='Entity tree' filename='EntityTree'/>
+			<!-- <plugin filename="VisualizeLidar" name="Visualize Lidar - Front Bottom">
+			</plugin>
+			<plugin filename="VisualizeLidar" name="Visualize Lidar - Front Left">
+			</plugin>
+			<plugin filename="VisualizeLidar" name="Visualize Lidar - Front Right">
+			</plugin>
+			<plugin filename="VisualizeLidar" name="Visualize Lidar - Front Top">
+			</plugin> -->
+		</gui>
+		<gravity>0 0 -9.8</gravity>
+		<magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+		<atmosphere type='adiabatic'/>
+		<scene>
+			<grid>false</grid>
+			<ambient>0.4 0.4 0.4 1</ambient>
+			<background>0.7 0.7 0.7 1</background>
+			<shadows>true</shadows>
+		</scene>
+		<light name='sun' type='directional'>
+			<cast_shadows>1</cast_shadows>
+			<pose>0 0 10 0 -0 0</pose>
+			<diffuse>0.8 0.8 0.8 1</diffuse>
+			<specular>0.2 0.2 0.2 1</specular>
+			<attenuation>
+				<range>1000</range>
+				<constant>0.9</constant>
+				<linear>0.01</linear>
+				<quadratic>0.001</quadratic>
+			</attenuation>
+			<direction>-0.5 0.1 -0.9</direction>
+		</light>
+		<light name='user_directional_light_0' type='directional'>
+			<pose>-5.92604 -3.56511 1 0 -0 0</pose>
+			<diffuse>0.5 0.5 0.5 1</diffuse>
+			<specular>0.1 0.1 0.1 1</specular>
+			<direction>0.1 0.1 -0.9</direction>
+			<attenuation>
+				<range>20</range>
+				<constant>0.5</constant>
+				<linear>0.01</linear>
+				<quadratic>0.001</quadratic>
+			</attenuation>
+			<cast_shadows>1</cast_shadows>
+		</light>
+		<model name='ground_plane'>
+			<static>1</static>
+			<link name='link'>
+				<collision name='collision'>
+					<geometry>
+						<plane>
+							<normal>0 0 1</normal>
+							<size>100 100</size>
+						</plane>
+					</geometry>
+					<surface>
+						<friction>
+							<ode>
+								<mu>100</mu>
+								<mu2>50</mu2>
+							</ode>
+						</friction>
+					</surface>
+				</collision>
+				<visual name='visual'>
+					<cast_shadows>0</cast_shadows>
+					<geometry>
+						<plane>
+							<normal>0 0 1</normal>
+							<size>100 100</size>
+						</plane>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Grey</name>
+						</script>
+					</material>
+				</visual>
+			</link>
+		</model>
+		<model name='mpc_wall'>
+			<static>1</static>
+			<pose>0 3 1.5 0 -0 1.57</pose>
+			<link name='link'>
+				<inertial>
+					<mass>10000</mass>
+					<inertia>
+						<ixx>216751</ixx>
+						<ixy>0</ixy>
+						<ixz>0</ixz>
+						<iyy>30833.3</iyy>
+						<iyz>0</iyz>
+						<izz>187584</izz>
+					</inertia>
+				</inertial>
+				<visual name='visual'>
+					<geometry>
+						<box>
+							<size>1 15 6</size>
+						</box>
+					</geometry>
+					<material>
+						<script>
+							<name>Gazebo/Bricks</name>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+						</script>
+					</material>
+				</visual>
+				<collision name='collision'>
+					<geometry>
+						<box>
+							<size>1 14.97 6</size>
+						</box>
+					</geometry>
+				</collision>
+			</link>
+		</model>
+		<model name='mpc_wall_inclined'>
+			<static>1</static>
+			<pose>0 4 8.5 0 -0.1635 1.57</pose>
+			<link name='link'>
+				<inertial>
+					<mass>10000</mass>
+					<inertia>
+						<ixx>216751</ixx>
+						<ixy>0</ixy>
+						<ixz>0</ixz>
+						<iyy>30833.3</iyy>
+						<iyz>0</iyz>
+						<izz>187584</izz>
+					</inertia>
+				</inertial>
+				<visual name='visual'>
+					<geometry>
+						<box>
+							<size>1 15 6</size>
+						</box>
+					</geometry>
+					<material>
+						<script>
+							<name>Gazebo/Bricks</name>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+						</script>
+					</material>
+				</visual>
+				<collision name='collision'>
+					<geometry>
+						<box>
+							<size>1 14.97 6</size>
+						</box>
+					</geometry>
+				</collision>
+			</link>
+		</model>
+		<wind/>
+		<spherical_coordinates>
+			<surface_model>EARTH_WGS84</surface_model>
+			<latitude_deg>0</latitude_deg>
+			<longitude_deg>0</longitude_deg>
+			<elevation>0</elevation>
+			<heading_deg>0</heading_deg>
+		</spherical_coordinates>
+	</world>
+</sdf>
