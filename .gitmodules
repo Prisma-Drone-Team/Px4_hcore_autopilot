@@ -1,6 +1,6 @@
 [submodule "src/modules/mavlink/mavlink"]
 	path = src/modules/mavlink/mavlink
-	url = https://github.com/Neabotics/mavlink_neabotics.git
+	url = https://github.com/Prisma-Drone-Team/mavlink_hcore.git
 	branch = custom_mavlink
 [submodule "src/drivers/uavcan/libuavcan"]
 	path = src/drivers/uavcan/libuavcan
@@ -12,7 +12,7 @@
 	branch = main
 [submodule "Tools/simulation/gazebo-classic/sitl_gazebo-classic"]
 	path = Tools/simulation/gazebo-classic/sitl_gazebo-classic
-	url = https://github.com/Neabotics/gazebo-classic_neabotics
+	url = https://github.com/Prisma-Drone-Team/gazebo-classic_hcore.git
 	branch = main
 [submodule "src/drivers/gps/devices"]
 	path = src/drivers/gps/devices
