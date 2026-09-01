@@ -141,6 +141,7 @@ if(gz-transport_FOUND)
 			get_filename_component("world_name" ${world} NAME_WE)
 
 			if(world_name STREQUAL "default")
+				message(STATUS "Creating target gz_${model} for world ${world_name}")
 				add_custom_target(gz_${model}
 					COMMAND ${CMAKE_COMMAND} -E env PX4_SIM_MODEL=gz_${model} $<TARGET_FILE:px4>
 					WORKING_DIRECTORY ${SITL_WORKING_DIR}

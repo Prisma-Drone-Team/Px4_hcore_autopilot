@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version='1.9'>
+  <model name='OakD-Lite-Sewer'>
+    <pose>0 0 0 0 0 0</pose>
+    <self_collide>false</self_collide>
+    <static>false</static>
+    <link name="OakD-Lite-Sewer/base_link">
+      <inertial>
+        <pose>0.00358 -0.03 .014 0 0 0</pose>
+        <mass>0.0001</mass>
+        <inertia>
+          <ixx>1e-7</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-7</iyy>
+          <iyz>0</iyz>
+          <izz>1e-7</izz>
+        </inertia>
+      </inertial>
+      <visual name="OakD-Lite-Sewer/visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://OakD-Lite-Downcam/meshes/OakDLite.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="OakD-Lite-Sewer/collision">
+        <pose>0.00358 -0.03 .014 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.0175 0.091 0.028</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <!--
+        cam0 — DOWNWARD camera: optical axis points straight down (-Z of drone).
+        In Gazebo SDF, a sensor with pitch=+pi/2 (1.5708) has its Z axis pointing DOWN.
+        Topic: /camera_down
+        Purpose: detect sewer entrance opening below, estimate depth to floor.
+      -->
+      <sensor name="IMX214_DOWN" type="camera">
+        <pose>0.0 0.0 -0.050 0 1.5708 0</pose>
+        <camera>
+          <horizontal_fov>1.204</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>15</far>
+          </clip>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>20</update_rate>
+        <visualize>true</visualize>
+        <topic>camera_down</topic>
+      </sensor>
+
+      <!--
+        cam1 — UPWARD-PITCHED camera: optical axis points ~30 deg above horizontal.
+        In Gazebo SDF, pitch=-0.5236 (=-pi/6=-30deg) tilts the sensor upward.
+        As the drone descends in the vertical sewer, the textured walls above scroll
+        through the image, providing abundant features for robust VIO.
+        Topic: /camera_up
+        Purpose: VIO feature tracking on sewer walls during vertical descent.
+      -->
+      <sensor name="IMX214_UP" type="camera">
+        <pose>0.0 0.0 0.020 0 -0.5236 0</pose>
+        <camera>
+          <horizontal_fov>1.204</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>20</update_rate>
+        <visualize>true</visualize>
+        <topic>camera_up</topic>
+      </sensor>
+
+      <gravity>true</gravity>
+      <velocity_decay/>
+    </link>
+  </model>
+</sdf>

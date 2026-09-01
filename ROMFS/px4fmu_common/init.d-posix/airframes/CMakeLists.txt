@@ -82,6 +82,8 @@ px4_add_romfs_files(
 	4008_gz_advanced_plane
 
 	4010_gz_baby_k
+	9001_gz_baby_k_downcam
+	9002_gz_babyk_sewer
 	4011_gz_NDT_tilting
 	4012_gz_NDT_tilting_interaction
 	4013_gz_NDT_tilting_augmented

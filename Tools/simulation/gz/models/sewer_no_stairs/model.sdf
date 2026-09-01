@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="sewer">
+    <static>true</static>
+    <pose>0.0 0.0 0 0 0 0</pose>
+    <link name="sewer">
+      <!-- Centering offset: mesh bounding box is [0,4.8]×[0,4.8]×[0,5.91].
+           X=-2.4 → world X = x_mesh - 2.4 + world_X → centered at world_X.
+           Y=-2.4 → world Y = y_mesh - 2.4       → centered at Y=0.
+           No rotation: tube points upward (user preference). -->
+      <pose>-2.4 -2.4 0 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <scale>0.004 0.004 0.003</scale>
+            <uri>model://sewer_no_stairs/meshes/sewer_no_stairs.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <scale>0.004 0.004 0.003</scale>
+            <uri>model://sewer_no_stairs/meshes/sewer_no_stairs.stl</uri>
+          </mesh>
+        </geometry>
+        <cast_shadows>false</cast_shadows>
+        <material>
+          <!-- Uniform flat material: no specular/highlights → reduces FAST corner detections on tube walls -->
+          <ambient>0.45 0.45 0.45 1</ambient>
+          <diffuse>0.45 0.45 0.45 1</diffuse>
+          <specular>0.0 0.0 0.0 0</specular>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

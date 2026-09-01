@@ -21,23 +21,23 @@
       <uri>model://leo_race_field/obstacle_03</uri>
     </include>
 
-    <include>
+    <!-- <include>
       <name>obstacle_03_second</name>
       <pose> 5 -1.42 0.1 0 0 1.57 </pose>
       <uri>model://leo_race_field/obstacle_03</uri>
-    </include>
+    </include> -->
 
-    <include>
+    <!-- <include>
       <name>obstacle_09</name>
       <pose> 5 5 0.1 0 0 3.14159</pose>
       <uri>model://leo_race_field/obstacle_09</uri>
-    </include>
+    </include> -->
 
-    <include>
+    <!-- <include>
       <name>obstacle_06</name>
       <pose> 6.847 1.881 0.1 0 0 0</pose>
       <uri>model://leo_race_field/obstacle_06</uri>
-    </include>
+    </include> -->
 
     <include>
       <name>obstacle_10_</name>
@@ -53,11 +53,11 @@
       <uri>model://leo_race_field/unknown_obst_1</uri>
     </include>
 
-    <include>
-      <name>unknown_obst_2</name> <!--low tower-->
+    <!-- <include>
+      <name>unknown_obst_2</name>
       <pose> -2.5 1.5 0.1 0 0 0</pose>
       <uri>model://leo_race_field/unknown_obst_2</uri>
-    </include> 
+    </include> -->
 
     <!--<include>
       <name>unknown_obst_3 </name> 
@@ -120,7 +120,7 @@
       <uri>model://leo_race_field/arucotag_157</uri>
     </include> 
     
-    <include>
+    <!-- <include>
       <name>arucotag_169</name>
       <pose>7.8 3.3 1.5 1.57 0 -1.57</pose>
       <uri>model://leo_race_field/arucotag_169</uri>
@@ -136,7 +136,7 @@
       <name>arucotag_181</name>
       <pose>3.5 3.45 1.5 1.57 0 0</pose>
       <uri>model://leo_race_field/arucotag_181</uri>
-    </include>
+    </include> -->
     
     <!-- New ArUco Tags - Height 0.5m -->
     <include>
@@ -151,7 +151,7 @@
       <uri>model://leo_race_field/arucotag_215</uri>
     </include>
     
-    <include>
+    <!-- <include>
       <name>arucotag_223</name>
       <pose>-3.5 -4.9 0.5 1.57 0 3.14159</pose>
       <uri>model://leo_race_field/arucotag_223</uri>
@@ -161,7 +161,7 @@
       <name>arucotag_274</name>
       <pose>6.0 4.95 0.5 1.57 0 0</pose>
       <uri>model://leo_race_field/arucotag_274</uri>
-    </include>
+    </include> -->
     
     <include>
       <name>arucotag_287</name>
@@ -169,7 +169,7 @@
       <uri>model://leo_race_field/arucotag_287</uri>
     </include>
     
-    <include>
+    <!-- <include>
       <name>teddy_bear</name>
       <pose>2.75 -3.0 0.25 1.57 0.0 -1.57</pose>
       <uri>model://leo_race_field/teddy_bear</uri>
@@ -191,7 +191,7 @@
       <name>traf_light</name>
       <pose>8.0 0.1 0.45 1.57 0.0 -1.57</pose>
       <uri>model://leo_race_field/traf_light</uri>
-    </include>
+    </include> -->
     
   </model>
 </sdf>

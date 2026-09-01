@@ -1,0 +1,155 @@
+#!/bin/sh
+#
+# @name Gazebo baby_k_downcam
+#
+# @type Tilting H coaxial octarrotor
+#
+
+. ${R}etc/init.d/rc.mc_defaults
+
+PX4_SIMULATOR=${PX4_SIMULATOR:=gz}
+PX4_GZ_WORLD=${PX4_GZ_WORLD:=corridor}
+# IL FIX È QUI: Questo dice a PX4 di caricare la cartella del modello modificato
+PX4_SIM_MODEL=${PX4_SIM_MODEL:=baby_k_downcam}
+PX4_GZ_MODEL_POSE=${PX4_GZ_MODEL_POSE:="0 0 0.2 0 0 0"}
+
+param set-default SIM_GZ_EN 1
+
+# Disabilito il GPS
+param set-default SENS_EN_GPSSIM 0      
+# Abilito External Vision per tutto
+param set-default EKF2_EV_CTRL 15       
+# Uso la VIO per l'altezza
+param set-default EKF2_HGT_REF 3        
+# Dico al filtro di ignorare il GPS
+param set-default EKF2_GPS_CTRL 0       
+param set-default SENS_EN_BAROSIM 0
+param set-default SENS_EN_MAGSIM 1
+
+# custom
+# param set-default SYS_CTRL_ALLOC 1 #dynamic allocation
+param set-default CA_AIRFRAME 13 
+# set MAV_TYPE 14
+param set-default CA_ROTOR_COUNT 8
+param set-default CA_SV_TL_COUNT 2
+
+param set-default MC_PITCH_ON_TILT 1
+
+# param set-default MPC_THR_HOVER 0.60
+# end custom
+
+# M1 CCW
+param set-default CA_ROTOR0_PX 0.185 
+param set-default CA_ROTOR0_PY 0.180
+param set-default CA_ROTOR0_PZ 0.0135
+param set-default CA_ROTOR0_KM 0.05
+
+# M2 CW
+param set-default CA_ROTOR1_PX 0.185 
+param set-default CA_ROTOR1_PY -0.180
+param set-default CA_ROTOR1_PZ 0.0135
+param set-default CA_ROTOR1_KM -0.05
+
+# M3 CCW
+param set-default CA_ROTOR2_PX -0.185  
+param set-default CA_ROTOR2_PY -0.180
+param set-default CA_ROTOR2_PZ 0.0135
+param set-default CA_ROTOR2_KM 0.05
+
+# M4 CW
+param set-default CA_ROTOR3_PX -0.185 
+param set-default CA_ROTOR3_PY 0.180
+param set-default CA_ROTOR3_PZ 0.0135
+param set-default CA_ROTOR3_KM -0.05
+
+# M5 CCW
+param set-default CA_ROTOR4_PX 0.185 
+param set-default CA_ROTOR4_PY -0.180
+param set-default CA_ROTOR4_PZ -0.0685
+param set-default CA_ROTOR4_KM 0.05
+
+# M6 CW
+param set-default CA_ROTOR5_PX 0.185 
+param set-default CA_ROTOR5_PY 0.180
+param set-default CA_ROTOR5_PZ -0.0685
+param set-default CA_ROTOR5_KM -0.05
+
+# M7 CCW
+param set-default CA_ROTOR6_PX -0.185  
+param set-default CA_ROTOR6_PY 0.180
+param set-default CA_ROTOR6_PZ -0.0685
+param set-default CA_ROTOR6_KM 0.05
+
+# M8 CW
+param set-default CA_ROTOR7_PX -0.185 
+param set-default CA_ROTOR7_PY -0.180
+param set-default CA_ROTOR7_PZ -0.0685
+param set-default CA_ROTOR7_KM -0.05
+
+param set-default SIM_GZ_EC_FUNC1 101
+param set-default SIM_GZ_EC_FUNC2 102
+param set-default SIM_GZ_EC_FUNC3 103
+param set-default SIM_GZ_EC_FUNC4 104
+param set-default SIM_GZ_EC_FUNC5 105
+param set-default SIM_GZ_EC_FUNC6 106
+param set-default SIM_GZ_EC_FUNC7 107
+param set-default SIM_GZ_EC_FUNC8 108
+
+param set-default SIM_GZ_EC_MIN1 150
+param set-default SIM_GZ_EC_MIN2 150
+param set-default SIM_GZ_EC_MIN3 150
+param set-default SIM_GZ_EC_MIN4 150
+param set-default SIM_GZ_EC_MIN5 150
+param set-default SIM_GZ_EC_MIN6 150
+param set-default SIM_GZ_EC_MIN7 150
+param set-default SIM_GZ_EC_MIN8 150
+
+param set-default SIM_GZ_EC_MAX1 1000
+param set-default SIM_GZ_EC_MAX2 1000
+param set-default SIM_GZ_EC_MAX3 1000
+param set-default SIM_GZ_EC_MAX4 1000
+param set-default SIM_GZ_EC_MAX5 1000
+param set-default SIM_GZ_EC_MAX6 1000
+param set-default SIM_GZ_EC_MAX7 1000
+param set-default SIM_GZ_EC_MAX8 1000
+
+param set-default SIM_GZ_SV_FUNC1 201
+param set-default SIM_GZ_SV_FUNC2 202
+
+# reverse mask for servos
+param set-default SIM_GZ_SV_REV 1  
+
+# --- Failsafe settings (Give time to VIO recovery system) ---
+
+# Aumenta timeout failsafe a 30 secondi
+param set-default COM_FAIL_ACT_T 30.0     
+# In caso di perdita RC: hovera invece di atterrare
+param set-default COM_OBL_RC_ACT 0        
+# Piu tollerante all'odometria esterna
+param set-default EKF2_EV_NOISE_MD 1      
+# Mantieni posctl anche senza stima heading stabile
+param set-default COM_POSCTL_NAVL 1       
+# Nessun delay sull'odometria esterna
+param set-default EKF2_EV_DELAY 0         
+# Rumore angolare odometria esterna
+param set-default EKF2_EVA_NOISE 0.1      
+# Rumore posizione odometria esterna
+param set-default EKF2_EVP_NOISE 0.1      
+# In caso di perdita RC: nessuna azione
+param set-default NAV_RCL_ACT 0           
+# Ignora perdita RC in modalita offboard
+param set-default COM_RCL_EXCEPT 4
+
+param set-default COM_ARM_WO_GPS 1    # Arma senza GPS
+param set-default COM_OF_LOSS_T 5
+
+param set-default MPC_ACC_HOR_MAX 3.0
+param set-default MPC_ACC_HOR 0.8
+param set-default MPC_JERK_MAX 1.0
+param set-default MPC_XY_VEL_MAX 1.5
+param set-default MPC_YAWRAUTO_MAX 20
+
+# Calibrazione Estrinseca Telecamera (OpenVINS)
+#param set-default EKF2_EV_POS_X 0.20
+#param set-default EKF2_EV_POS_Y 0.00
+#param set-default EKF2_EV_POS_Z 0.03
